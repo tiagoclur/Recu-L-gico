@@ -65,8 +65,7 @@ sublista([], []).
 sublista([_|Cola], Sublista):-sublista(Cola,Sublista).
 sublista([Cabeza|Cola], [Cabeza|Sublista]):-sublista(Cola,Sublista).
 
-
-%%    
+%%
 
 barrioCopado(Barrio):-
     barrio(_, Barrio),
@@ -79,5 +78,7 @@ barrioCaro(Barrio):-
 comprar(Plata, Casas, PlataRestante):-
     findall(Nombre, puedoComprar(Nombre, Plata), ListaTotal),
     sublista(ListaTotal, Casas),
-
-% findall(Precio, valor(member(Casa, Casas), Precio), PlataRestante)
+    maplist(valor, Casas, ListaPrecios),
+    sumlist(ListaPrecios, CostoTotal),
+    PlataRestante is Plata - CostoTotal,
+    PlataRestante >= 0.
